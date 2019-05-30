@@ -10,6 +10,7 @@ class App extends React.Component {
     this.state = {
       todoList: [],
       filteredTodoList: [],
+      filterQuery: '',
       isFiltered: false,
       localStorageKey: 'todoList'
     }
@@ -76,12 +77,26 @@ class App extends React.Component {
     }, () => this.addToLocalStorage())
   }
 
+  onFilterChange = event => {
+    this.setState({
+      filterQuery: event.target.value
+    }, () => this.filterOnChange(this.state.filterQuery))
+  }
+
+  clearFilter = () => {
+    this.setState({
+      filterQuery: ''
+    }, () => this.filterOnChange(this.state.filterQuery))
+  }
+
   render() {
     let functionObj = {
       filterOnChange: this.filterOnChange,
       formSubmit: this.addTodoTask,
       actionOnClick: this.toggleTodoItemDone,
-      clearComplete: this.removeCompletedItemsFromList
+      clearComplete: this.removeCompletedItemsFromList,
+      clearFilter: this.clearFilter,
+      onFilterChange: this.onFilterChange
     }
     return (
       <TodoList theState={this.state} theFunctions={functionObj} />

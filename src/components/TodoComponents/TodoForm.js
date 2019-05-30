@@ -17,6 +17,7 @@ class TodoForm extends React.Component {
   }
 
   clearOnClick = event => {
+    this.props.functions.clearFilter();
     this.setState({
       task: '',
       placeholder: 'Enter New Todo Item',
