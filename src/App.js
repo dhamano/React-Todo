@@ -28,6 +28,11 @@ class App extends React.Component {
           task: 'Take Out Garbage',
           id: 1528817084360,
           complete: true
+        },
+        {
+          task: 'Say Hello World!',
+          id: 1528817084361,
+          complete: false
         }
       ],
       filteredTodoList: [],
