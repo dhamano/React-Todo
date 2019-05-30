@@ -12,44 +12,41 @@ class App extends React.Component {
         {
           task: 'Organize Garage',
           id: 1528817077286,
-          complete: false
+          complete: true
         },
         {
           task: 'Bake Cookies',
           id: 1528817084358,
           complete: false
+        },
+        {
+          task: 'Bake Fish',
+          id: 1528817084359,
+          complete: false
+        },
+        {
+          task: 'Take Out Garbage',
+          id: 1528817084360,
+          complete: true
         }
       ],
       filteredTodoList: [],
-      isFiltered: false,
-      task: '',
-      id: '',
-      complete: false
+      isFiltered: false
     }
   }
 
-  addTodoTask = event => {
-    event.preventDefault();
-    if(this.state.task === '') {
-      let field = document.querySelector('#task');
-      field.classList.add('missing-error');
-      field.setAttribute('placeholder','Please Enter a Task');
-      return false;
-    }
-    document.getElementById('task').value = "";
+  addTodoTask = taskToAdd => {
     const newTodo = {
-      task: this.state.task,
+      task: taskToAdd,
       id: Date.now(),
-      complete: this.state.complete
+      complete: false
     }
     this.setState({
-      todoList: [...this.state.todoList, newTodo],
-      task: ''
+      todoList: [...this.state.todoList, newTodo]
     });
   }
 
-  onChangeFilter = event => {
-    let filterQuery = event.target.value;
+  filterOnChange = filterQuery => {
     let filteredTodoList = this.state.todoList;
     (filterQuery !== "") ? this.setState({ isFiltered: true }) : this.setState({ isFiltered: false });
     filteredTodoList = filteredTodoList.filter( item => {
@@ -59,14 +56,6 @@ class App extends React.Component {
     this.setState({ filteredTodoList: filteredTodoList });
   }
 
-  onClickClear = event => {
-    document.querySelector('#filter').value = "";
-    this.setState({ isFiltered: false })
-    let field = document.querySelector('#task');
-    field.classList.remove('missing-error');
-    field.setAttribute('placeholder','New Todo Item');
-  }
-
   handleOnClick = event => {
     let indexVal = this.state.todoList.findIndex( obj => parseInt(obj.id) === parseInt(event.target.id) );
     let cloneOfArray = [...this.state.todoList];
@@ -74,12 +63,6 @@ class App extends React.Component {
     this.setState({
       todoList: cloneOfArray
     })
-  }
-
-  handleOnChange = event => {
-    this.setState({
-      [event.target.name]: event.target.value
-    });
   }
 
   handleClearCompleted = event => {
@@ -92,9 +75,7 @@ class App extends React.Component {
 
   render() {
     let functionObj = {
-      filterOnChange: this.onChangeFilter,
-      clearOnClick: this.onClickClear,
-      actionOnChange: this.handleOnChange,
+      filterOnChange: this.filterOnChange,
       formSubmit: this.addTodoTask,
       actionOnClick: this.handleOnClick,
       clearComplete: this.handleClearCompleted

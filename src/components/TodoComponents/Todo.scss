@@ -41,7 +41,7 @@
         color: #ccc;
       }
 
-      &.missing-error {
+      &.error {
         border-color: red;
 
         &::placeholder {
@@ -75,13 +75,46 @@
       &[value="clear"] {
         background: transparent;
         color: #9cc7d8;
-        transition: all 0.5s linear;
+        transition: all 0.25s linear;
 
         &:hover {
           background: #dedede;
           color: #fff;
           border-color: #dedede;
         }
+      }
+    }
+  }
+
+  #filter {
+    padding: 6px;
+    font-size: 1rem;
+    line-height: 1em;
+    position: relative;
+    top: -6px;
+
+    &::placeholder {
+      color: #ccc;
+    }
+
+    & + button {
+      margin-left: 4px;
+      padding: 6px;
+      background: #ccc;
+      color: white;
+      letter-spacing: 0.05rem;
+      font-size: 1rem;
+      display: inline-block;
+      border: solid 1px #ccc;
+      appearance: none;
+      cursor: pointer;
+      position: relative;
+      top: -6px;
+      transition: all 0.25s ease-in-out;
+
+      &:hover {
+        background: transparent;
+        color: #ccc;
       }
     }
   }
