@@ -28,7 +28,7 @@ class App extends React.Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.setState({
       filteredTodoList: this.state.todoList
     })
