@@ -16,7 +16,7 @@ class App extends React.Component {
         },
         {
           task: 'Bake Cookies',
-          id: 1528817084358, //13
+          id: 1528817084358,
           complete: false
         }
       ],
@@ -26,12 +26,6 @@ class App extends React.Component {
       id: '',
       complete: false
     }
-  }
-
-  componentDidMount() {
-    this.setState({
-      filteredTodoList: this.state.todoList
-    })
   }
 
   addTodoTask = event => {
@@ -57,29 +51,17 @@ class App extends React.Component {
   onChangeFilter = event => {
     let filterQuery = event.target.value;
     let filteredTodoList = this.state.todoList;
-    if(filterQuery !== ""){
-      this.setState({
-        isFiltered: true
-      })
-    } else {
-      this.setState({
-        isFiltered: false
-      })
-    }
+    (filterQuery !== "") ? this.setState({ isFiltered: true }) : this.setState({ isFiltered: false });
     filteredTodoList = filteredTodoList.filter( item => {
       let taskName = item.task.toLowerCase();
       return taskName.indexOf( filterQuery.toLowerCase() ) !== -1;
     });
-    this.setState({
-      filteredTodoList: filteredTodoList
-    });
+    this.setState({ filteredTodoList: filteredTodoList });
   }
 
   onClickClear = event => {
     document.querySelector('#filter').value = "";
-    this.setState({
-      isFiltered: false
-    })
+    this.setState({ isFiltered: false })
     let field = document.querySelector('#task');
     field.classList.remove('missing-error');
     field.setAttribute('placeholder','New Todo Item');
@@ -88,7 +70,7 @@ class App extends React.Component {
   handleOnClick = event => {
     let indexVal = this.state.todoList.findIndex( obj => parseInt(obj.id) === parseInt(event.target.id) );
     let cloneOfArray = [...this.state.todoList];
-    (!cloneOfArray[indexVal].complete) ? cloneOfArray[indexVal].complete = true : cloneOfArray[indexVal].complete = false;
+    cloneOfArray[indexVal].complete = !cloneOfArray[indexVal].complete;
     this.setState({
       todoList: cloneOfArray
     })
@@ -109,13 +91,16 @@ class App extends React.Component {
   }
 
   render() {
-    let obj = {
-      task: this.state.task,
-      id: this.state.id,
-      complete: this.state.complete
+    let functionObj = {
+      filterOnChange: this.onChangeFilter,
+      clearOnClick: this.onClickClear,
+      actionOnChange: this.handleOnChange,
+      formSubmit: this.addTodoTask,
+      actionOnClick: this.handleOnClick,
+      clearComplete: this.handleClearCompleted
     }
     return (
-      <TodoList filterOnChange={this.onChangeFilter} clearOnClick={this.onClickClear} taskObj={obj} theState={this.state} actionOnChange={this.handleOnChange} formSubmit={this.addTodoTask} actionOnClick={this.handleOnClick} clearComplete={this.handleClearCompleted} />
+      <TodoList theState={this.state} theFunctions={functionObj} />
     );
   }
 }

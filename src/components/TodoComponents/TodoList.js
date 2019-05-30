@@ -17,10 +17,10 @@ class TodoList extends React.Component {
     }
     return(
       <div className="container-todolist">
-        <TodoForm clearOnClick={this.props.clearOnClick} taskObj={this.props.taskObj} actionOnChange={this.props.actionOnChange} setCreate={this.props.setOnCreate} formOnSubmit={this.props.formSubmit} clearComplete={this.props.clearComplete} />
+        <TodoForm taskObj={this.props.theState} functions={this.props.theFunctions} />
         <ul className="todolist">
-          <li><h1>Todo List <Filter onChange={this.props.filterOnChange} /></h1></li>
-          <Todo todoList={listToUse} actionOnClick={this.props.actionOnClick} />
+          <li><h1>Todo List <Filter onChange={this.props.theFunctions.filterOnChange} /></h1></li>
+          <Todo todoList={listToUse} actionOnClick={this.props.theFunctions.actionOnClick} />
         </ul>
       </div>
     )
