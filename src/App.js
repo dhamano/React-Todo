@@ -8,36 +8,33 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todoList: [
-        {
-          task: 'Organize Garage',
-          id: 1528817077286,
-          complete: true
-        },
-        {
-          task: 'Bake Cookies',
-          id: 1528817084358,
-          complete: false
-        },
-        {
-          task: 'Bake Fish',
-          id: 1528817084359,
-          complete: false
-        },
-        {
-          task: 'Take Out Garbage',
-          id: 1528817084360,
-          complete: true
-        },
-        {
-          task: 'Say Hello World!',
-          id: 1528817084361,
-          complete: false
-        }
-      ],
+      todoList: [],
       filteredTodoList: [],
-      isFiltered: false
+      isFiltered: false,
+      localStorageKey: 'todoList'
     }
+  }
+
+  componentDidMount() {
+    this.getValuesFromLocalStorage();
+  }
+
+  getValuesFromLocalStorage() {
+    for (let localStorageKey in this.state) {
+      if (localStorage.hasOwnProperty(localStorageKey)) {
+        let value = localStorage.getItem(localStorageKey);
+        try {
+          value = JSON.parse(value);
+          this.setState({ [localStorageKey]: value });
+        } catch (e) {
+          this.setState({ [localStorageKey]: value });
+        }
+      }
+    }
+  }
+
+  addToLocalStorage() {
+    localStorage.setItem("todoList", JSON.stringify(this.state.todoList));
   }
 
   addTodoTask = taskToAdd => {
@@ -48,7 +45,8 @@ class App extends React.Component {
     }
     this.setState({
       todoList: [...this.state.todoList, newTodo]
-    });
+    }, () => this.addToLocalStorage());
+    
   }
 
   filterOnChange = filterQuery => {
@@ -75,7 +73,7 @@ class App extends React.Component {
     let doneList = [...this.state.todoList].filter( item => item.complete === false);
     this.setState({
       todoList: doneList
-    })
+    }, () => this.addToLocalStorage())
   }
 
   render() {
