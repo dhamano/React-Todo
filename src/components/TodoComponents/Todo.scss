@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa&display=swap');
+
 .container-todolist {
+  width: calc(100% - 80px);
   max-width: 1000px;
-  min-height: 110vh;
+  min-height: 50vh;
   margin: 0 auto;
   padding: 0;
   display: flex;
@@ -9,6 +12,78 @@
   position: relative;
 
   .container-form {
+    $border-color: #9cc7d8;
+
+    padding: 20px 20px 30px;
+    background: rgba(255,255,255,0.6);
+    border-right: solid 1px $border-color;
+    border-left: solid 1px $border-color;
+    border-bottom: solid 1px $border-color;
+    
+    h2 {
+      margin-top: 0;
+      color: #96c0ce;
+      text-align: center;
+      font-size: 1.5rem;
+      line-height: 1.25em;
+      font-family: comfortaa, helvetica, arial, sans-serif;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      line-height: 1em;
+      position: relative;
+      transition: all 0.25s ease-in-out;
+      
+      &::placeholder {
+        color: #ccc;
+      }
+
+      &.missing-error {
+        border-color: red;
+
+        &::placeholder {
+          color: red;
+        }
+      }
+    }
+
+    button {
+      width: 100%;
+      padding: 10px 10px;
+      background: #9cc7d8;
+      color: white;
+      letter-spacing: 0.05rem;
+      font-size: 1rem;
+      display: inline-block;
+      border: solid 1px #9cc7d8;
+      appearance: none;
+      cursor: pointer;
+
+      &[type="submit"] {
+        margin-bottom: 20px;
+        transition: all 0.25s ease-in-out;
+
+        &:hover {
+          background: #3eb2e0;
+          color: #fff;
+        }
+      }
+
+      &[value="clear"] {
+        background: transparent;
+        color: #9cc7d8;
+        transition: all 0.5s linear;
+
+        &:hover {
+          background: #dedede;
+          color: #fff;
+          border-color: #dedede;
+        }
+      }
+    }
   }
   
   .form-todo{
@@ -21,15 +96,28 @@
 
   .todolist {
     width: 100%;
+    min-height: 50vh;
     margin: 0;
-    padding: 0 25px;
+    padding: 0 25px 20px;
+    background: rgba(255,255,255,0.75);
     list-style-type: none;
+    box-shadow: 0 0 5px rgba(0,0,0,0.25);
 
     li {
-      $checkbox-size: 10px;
+      $checkbox-size: 0.75rem;
       $checkbox-color-done: #00ba08;
 
       margin-bottom: 10px;
+      font-size: 1.125rem;
+      line-height: 1.25em;
+
+      h1 {
+        color: #60a8c1;
+        font-size: 2.125rem;
+        line-height: 1.125em;
+        font-family: comfortaa, helvetica, arial, sans-serif;
+        border-bottom: solid 2px #60a8c1;
+      }
 
       &:nth-child(n+2) {
         cursor: pointer;
@@ -41,7 +129,7 @@
         &.done::before, &::before {
           width: $checkbox-size;
           height: $checkbox-size;
-          margin-right: 4px;
+          margin-right: 8px;
           display: inline-block;
         }
   
@@ -54,6 +142,7 @@
           content: '✓';
           background: $checkbox-color-done;
           color: white;
+          text-align: center;
           font-size: 12px;
           line-height: 1em;
           border: solid 1px $checkbox-color-done;
