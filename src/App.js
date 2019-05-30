@@ -26,7 +26,7 @@ class App extends React.Component {
         try {
           value = JSON.parse(value);
           this.setState({ [localStorageKey]: value });
-        } catch (e) {
+        } catch (error) {
           this.setState({ [localStorageKey]: value });
         }
       }
