@@ -43,11 +43,11 @@ class TodoForm extends React.Component {
     return(
       <div className="container-form">
         <h2>Add a task to &ldquo;todo&rdquo; list:</h2>
-        <form className="form-todo" onSubmit={this.formSubmit}>
+        <form className="form-todo">
           <label htmlFor="task">
             <input onChange={this.handleOnChange} onClick={this.clearOnClick} className={`${this.state.error ? 'error' : ''}`} value={this.state.task} placeholder={this.state.placeholder} type="text" name="task" id="task" />
           </label>
-          <button type="submit" value="submit">Add New Todo</button>
+          <button onClick={this.formSubmit} type="submit" value="submit">Add New Todo</button>
           <button onClick={this.props.functions.clearComplete} value="clear">Clear Completed</button>
         </form>
       </div>

@@ -56,7 +56,7 @@ class App extends React.Component {
     this.setState({ filteredTodoList: filteredTodoList });
   }
 
-  handleOnClick = event => {
+  toggleTodoItemDone = event => {
     let indexVal = this.state.todoList.findIndex( obj => parseInt(obj.id) === parseInt(event.target.id) );
     let cloneOfArray = [...this.state.todoList];
     cloneOfArray[indexVal].complete = !cloneOfArray[indexVal].complete;
@@ -65,7 +65,7 @@ class App extends React.Component {
     })
   }
 
-  handleClearCompleted = event => {
+  removeCompletedItemsFromList = event => {
     event.preventDefault();
     let doneList = [...this.state.todoList].filter( item => item.complete === false);
     this.setState({
@@ -77,8 +77,8 @@ class App extends React.Component {
     let functionObj = {
       filterOnChange: this.filterOnChange,
       formSubmit: this.addTodoTask,
-      actionOnClick: this.handleOnClick,
-      clearComplete: this.handleClearCompleted
+      actionOnClick: this.toggleTodoItemDone,
+      clearComplete: this.removeCompletedItemsFromList
     }
     return (
       <TodoList theState={this.state} theFunctions={functionObj} />
