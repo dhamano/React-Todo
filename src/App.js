@@ -51,9 +51,8 @@ class App extends React.Component {
   }
 
   filterOnChange = filterQuery => {
-    let filteredTodoList = this.state.todoList;
     (filterQuery !== "") ? this.setState({ isFiltered: true }) : this.setState({ isFiltered: false });
-    filteredTodoList = filteredTodoList.filter( item => {
+    let filteredTodoList = this.state.todoList.filter( item => {
       let taskName = item.task.toLowerCase();
       return taskName.indexOf( filterQuery.toLowerCase() ) !== -1;
     });
