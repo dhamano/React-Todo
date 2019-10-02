@@ -19,7 +19,7 @@ class TodoList extends React.Component {
       <div className="container-todolist">
         <TodoForm taskObj={this.props.theState} functions={this.props.theFunctions} />
         <ul className="todolist">
-          <li><h1>Todo List <Filter onChange={this.props.theFunctions.filterOnChange} /></h1></li>
+          <li><h1>Todo List <Filter functions={this.props.theFunctions} theState={this.props.theState} /></h1></li>
           <Todo todoList={listToUse} actionOnClick={this.props.theFunctions.actionOnClick} />
         </ul>
       </div>

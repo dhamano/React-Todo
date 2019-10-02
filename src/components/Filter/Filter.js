@@ -1,11 +1,14 @@
 import React from 'react';
 
-const Filter = props => {
-  return (
-    <React.Fragment>
-      <input type="text" onChange={props.onChange} name="filter" id="filter" placeholder="Filter for Todo Item" />
-    </React.Fragment>
-  )
+class Filter extends React.Component {
+  render() {
+    return (
+      <React.Fragment>
+        <input type="text" value={this.props.theState.filterQuery} onChange={this.props.functions.onFilterChange} name="filter" id="filter" placeholder="Filter for Todo List" />
+        <button onClick={this.clearFilter} >Clear Filter</button>
+      </React.Fragment>
+    )
+  }
 }
 
 export default Filter;
