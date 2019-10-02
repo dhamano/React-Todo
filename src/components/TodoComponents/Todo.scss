@@ -1,0 +1,64 @@
+.container-todolist {
+  max-width: 1000px;
+  min-height: 110vh;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: relative;
+
+  .container-form {
+  }
+  
+  .form-todo{
+  
+    label {
+      margin: 0 auto 20px;
+      display: block;
+    }
+  }
+
+  .todolist {
+    width: 100%;
+    margin: 0;
+    padding: 0 25px;
+    list-style-type: none;
+
+    li {
+      $checkbox-size: 10px;
+      $checkbox-color-done: #00ba08;
+
+      margin-bottom: 10px;
+
+      &:nth-child(n+2) {
+        cursor: pointer;
+
+        &.done {
+          color: $checkbox-color-done;
+        }
+  
+        &.done::before, &::before {
+          width: $checkbox-size;
+          height: $checkbox-size;
+          margin-right: 4px;
+          display: inline-block;
+        }
+  
+        &::before {
+          content: '';
+          border: solid 1px #333;
+        }
+  
+        &.done::before {
+          content: '✓';
+          background: $checkbox-color-done;
+          color: white;
+          font-size: 12px;
+          line-height: 1em;
+          border: solid 1px $checkbox-color-done;
+        }
+      }
+    }
+  }
+}
