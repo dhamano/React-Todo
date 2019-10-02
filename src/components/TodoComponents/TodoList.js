@@ -3,16 +3,24 @@ import React from 'react';
 import Todo from './Todo';
 import TodoForm from './TodoForm';
 
+import Filter from '../Filter/Filter';
+
 import './Todo.scss';
 
 class TodoList extends React.Component {
   render() {
+    let listToUse = []
+    if(this.props.theState.isFiltered){
+      listToUse = this.props.theState.filteredTodoList;
+    } else {
+      listToUse = this.props.theState.todoList;
+    }
     return(
       <div className="container-todolist">
-        <TodoForm actionOnChange={this.props.actionOnChange} setCreate={this.props.setOnCreate} formOnSubmit={this.props.formSubmit} clearComplete={this.props.clearComplete} />
+        <TodoForm taskObj={this.props.theState} functions={this.props.theFunctions} />
         <ul className="todolist">
-          <li><h1>Todo List</h1></li>
-          <Todo todoList={this.props.todoTaskList.todoList} actionOnClick={this.props.actionOnClick} />
+          <li><h1>Todo List <Filter onChange={this.props.theFunctions.filterOnChange} /></h1></li>
+          <Todo todoList={listToUse} actionOnClick={this.props.theFunctions.actionOnClick} />
         </ul>
       </div>
     )

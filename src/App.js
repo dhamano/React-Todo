@@ -12,38 +12,68 @@ class App extends React.Component {
         {
           task: 'Organize Garage',
           id: 1528817077286,
-          completed: false
+          complete: false
         },
         {
           task: 'Bake Cookies',
-          id: 1528817084358, //13
-          completed: false
+          id: 1528817084358,
+          complete: false
         }
       ],
+      filteredTodoList: [],
+      isFiltered: false,
       task: '',
       id: '',
       complete: false
     }
-    this.addTodoTask = this.addTodoTask.bind(this);
-    this.handleOnClick = this.handleOnClick.bind(this);
-    this.handleOnChange = this.handleOnChange.bind(this);
-    this.handleClearCompleted = this.handleClearCompleted.bind(this);
   }
 
   addTodoTask = event => {
     event.preventDefault();
+    if(this.state.task === '') {
+      let field = document.querySelector('#task');
+      field.classList.add('missing-error');
+      field.setAttribute('placeholder','Please Enter a Task');
+      return false;
+    }
+    document.getElementById('task').value = "";
     const newTodo = {
       task: this.state.task,
       id: Date.now(),
       complete: this.state.complete
     }
     this.setState({
-      todoList: [...this.state.todoList, newTodo]
+      todoList: [...this.state.todoList, newTodo],
+      task: ''
     });
   }
 
+  onChangeFilter = event => {
+    let filterQuery = event.target.value;
+    let filteredTodoList = this.state.todoList;
+    (filterQuery !== "") ? this.setState({ isFiltered: true }) : this.setState({ isFiltered: false });
+    filteredTodoList = filteredTodoList.filter( item => {
+      let taskName = item.task.toLowerCase();
+      return taskName.indexOf( filterQuery.toLowerCase() ) !== -1;
+    });
+    this.setState({ filteredTodoList: filteredTodoList });
+  }
+
+  onClickClear = event => {
+    document.querySelector('#filter').value = "";
+    this.setState({ isFiltered: false })
+    let field = document.querySelector('#task');
+    field.classList.remove('missing-error');
+    field.setAttribute('placeholder','New Todo Item');
+  }
+
   handleOnClick = event => {
-    event.target.classList.toggle('done');
+    let indexVal = this.state.todoList.findIndex( obj => parseInt(obj.id) === parseInt(event.target.id) );
+    let cloneOfArray = [...this.state.todoList];
+    cloneOfArray[indexVal].complete = !cloneOfArray[indexVal].complete;
+    this.setState({
+      todoList: cloneOfArray
+    })
   }
 
   handleOnChange = event => {
@@ -54,17 +84,23 @@ class App extends React.Component {
 
   handleClearCompleted = event => {
     event.preventDefault();
-    let doneList = document.querySelectorAll('li.done');
-    doneList.forEach(function( node ) { node.parentNode.removeChild( node ); }) 
+    let doneList = [...this.state.todoList].filter( item => item.complete === false);
+    this.setState({
+      todoList: doneList
+    })
   }
 
-
-  // you will need a place to store your state in this component.
-  // design `App` to be the parent component of your application.
-  // this component is going to take care of state, and any change handlers you need to work with your state
   render() {
+    let functionObj = {
+      filterOnChange: this.onChangeFilter,
+      clearOnClick: this.onClickClear,
+      actionOnChange: this.handleOnChange,
+      formSubmit: this.addTodoTask,
+      actionOnClick: this.handleOnClick,
+      clearComplete: this.handleClearCompleted
+    }
     return (
-      <TodoList todoTaskList={this.state} actionOnChange={this.handleOnChange} formSubmit={this.addTodoTask} actionOnClick={this.handleOnClick} clearComplete={this.handleClearCompleted} />
+      <TodoList theState={this.state} theFunctions={functionObj} />
     );
   }
 }
